@@ -29,6 +29,14 @@ module Bootboot
         ruby_spec = Gem::Specification.new(ruby_spec_name, ruby_version.gem_version)
         ruby_spec.source = self
         idx << ruby_spec
+
+        # Ensure the current ruby version is also always present
+        if ruby_version != Bundler::RubyVersion.system
+          ruby_version = Bundler::RubyVersion.system
+          ruby_spec = Gem::Specification.new(ruby_spec_name, ruby_version.gem_version)
+          ruby_spec.source = self
+          idx << ruby_spec
+        end
       end
     end
 
